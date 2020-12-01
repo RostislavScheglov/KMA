@@ -1,0 +1,144 @@
+window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+
+//Slaider
+$(document).ready(function () {
+    $('.slaider').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        fade: true,
+        cssEase: 'linear',
+        arrows: true,
+        swipe:false,
+    });
+
+  
+});
+//Burger
+$(document).ready(function(){
+    $('.header_burger').click(function(event){
+        $('.header_burger,#nav').toggleClass('active');
+    });
+});
+
+
+//Anchor Scroll
+const anchors = document.querySelectorAll('a[href*="#"]')
+
+for (let anchor of anchors) {
+    anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const blockID = anchor.getAttribute('href')
+
+        document.querySelector('' + blockID).scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    })
+}
+
+$("#navToggle").click(function() {
+    $(this).toggleClass("active");
+    $(".overlay").toggleClass("open");
+    $("body").toggleClass("locked"); 
+});
+
+
+// Upadate Page onResize
+   
+window.onresize = function () {
+        location.reload();
+   }
+ 
+
+
+//Animation Block
+
+if (document.documentElement.clientWidth >= 878) {
+    blockMoveGov = anime({
+        targets: '.featureItem',
+        translateX: '-60%',
+        delay: anime.stagger(100, { start: 0 }),
+        autoplay: false,
+        easing: 'easeOutCirc',
+        opacity: "1"
+    });
+    blockMoveBus = anime({
+        targets: '.businessfeatureItem',
+        translateX: '-60%',
+        delay: anime.stagger(100, { start: 0 }),
+        autoplay: false,
+        easing: 'easeOutCirc',
+        opacity: "1"
+    });
+} 
+
+else if (document.documentElement.clientWidth <= 877){
+    blockMoveGov = anime({
+        targets: '.featureItem',
+        delay: anime.stagger(100, { start: 0 }),
+        autoplay: false,
+        easing: 'easeOutCirc',
+        opacity: "1"
+    });
+    blockMoveBus = anime({
+        targets: '.businessfeatureItem',
+        delay: anime.stagger(100, { start: 0 }),
+        autoplay: false,
+        easing: 'easeOutCirc',
+        opacity: "1"
+    });
+}
+
+
+
+
+
+
+let businessFeatur = document.querySelector('.businessFeatures');
+let govermFeatur = document.querySelector('.govermentFeatures');
+let btnBusiness = document.querySelector('#business');
+let btnGoverment = document.querySelector('#goverment');
+
+
+function removeBlockGov() {
+    govermFeatur.style.opacity = '0';
+    btnGoverment.style.boxShadow = 'none';
+}
+function removeBlockBus() {
+    businessFeatur.style.opacity = '0';
+    btnBusiness.style.boxShadow = 'none';
+}
+function BlockGov() {
+    govermFeatur.style.opacity = '1';
+    btnGoverment.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+}
+function BlockBus() {
+    businessFeatur.style.opacity = '1';
+    btnBusiness.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+}
+
+document.addEventListener('DOMContentLoaded', BlockGov);
+document.addEventListener('DOMContentLoaded', blockMoveGov.restart);
+
+
+btnBusiness.addEventListener('click', removeBlockGov);
+btnBusiness.addEventListener('click', blockMoveBus.restart);
+btnBusiness.addEventListener('click', BlockBus);
+
+
+
+btnGoverment.addEventListener('click', removeBlockBus);
+btnGoverment.addEventListener('click', blockMoveGov.restart);
+btnGoverment.addEventListener('click', BlockGov);
+
+
+
+
+
